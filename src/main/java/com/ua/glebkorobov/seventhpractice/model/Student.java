@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.*;
 import java.time.LocalDate;
+import java.util.Objects;
 
 @Entity
 @Table
@@ -46,4 +47,20 @@ public class Student {
 
     @Pattern(regexp = "^(male|female)$")
     private String gender;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Student)) return false;
+        Student student = (Student) o;
+        return getIpn() == student.getIpn() && Objects.equals(getName(), student.getName()) &&
+                Objects.equals(getSurname(), student.getSurname()) && Objects.equals(getDateOfBirthday(),
+                student.getDateOfBirthday()) && Objects.equals(getEmail(), student.getEmail()) &&
+                Objects.equals(getGender(), student.getGender());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(getIpn(), getName(), getSurname(), getDateOfBirthday(), getEmail(), getGender());
+    }
 }
